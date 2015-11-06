@@ -45,21 +45,14 @@ def flush():
 #def flush():
 #    tk.mainloop()
 
+two = Decimal(2)
+
+def floor(n):
+    return n.to_integral_exact(rounding=ROUND_FLOOR)
+
 def tupper(x, y):
-    yy = Decimal(k + y)
-
-    a = yy / 17
-    b = a.to_integral_exact(rounding=ROUND_FLOOR)
-
-    c = Decimal(-17 * x)
-    d = y
-
-    e = b * 2 ** (c - d)
-
-    f = e.to_integral_exact(rounding=ROUND_FLOOR)
-    g = f % 2
-
-    return g > 0.5
+    yy = Decimal(y + k)
+    return 0.5 < floor(yy / 17 * two ** (-17 * x - y) % 2)
 
 for x in range(width):
     for y in range(height):
