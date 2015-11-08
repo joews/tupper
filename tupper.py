@@ -1,5 +1,4 @@
-from math import floor
-from itertools import count
+import math
 from decimal import *
 from Tkinter import *
 
@@ -19,7 +18,7 @@ buffer = [[None] * width for row in range(height)]
 
 def draw(x, y, value):
     char = value and "##" or "  "
-    buffer[y][width - x - 1] = char
+    buffer[y][x] = char
 
 def flush():
     print "\n".join(["".join(row) for row in buffer])
@@ -27,23 +26,30 @@ def flush():
 #
 # Tkinter "real" graphics
 #
-# scale = 10
+scale = 10
 
-#tk = Tk()
-#canvas = Canvas(tk, width=width * scale, height=height * scale)
-#canvas.pack()
+tk = Tk()
+canvas = Canvas(tk, width=width * scale, height=height * scale)
+canvas.pack()
 
 #def draw(x, y, value):
-#    x1 = (width - x) * scale
+#    x1 = x * scale
 #    y1 = y * scale
-#    x2 = (width - (x + 1)) * scale
+#    x2 = (x + 1) * scale
 #    y2 = (y + 1) * scale
-#   
+   
 #    fill = value and "black" or "white"
 #    canvas.create_rectangle(x1, y1, x2, y2, width=0, fill=fill)
 
 #def flush():
-#    tk.mainloop()
+#   tk.mainloop()
+
+
+#
+# Approach 1
+# Iteratively apply Tupper's formula to each (x, y) coordinate
+# Slow!
+#
 
 two = Decimal(2)
 
@@ -51,14 +57,41 @@ def floor(n):
     return n.to_integral_exact(rounding=ROUND_FLOOR)
 
 def tupper(x, y):
-    yy = Decimal(y + k)
-    return 0.5 < floor(yy / 17 * two ** (-17 * x - y) % 2)
+    return 0.5 < floor((y + k) / 17 * two ** (-17 * x - y) % 2)
 
-for x in range(width):
-    for y in range(height):
-        value = tupper(x, y)
-        draw(x, y, value)
+def tupper_formula():
+    for x in range(width):
+        for y in range(height):
+            # invert the x axis
+            x_out = width - x - 1
+            draw(x_out, y, tupper(x, y))
 
+#
+# Approach 2
+# Decode the bitmap directly
+# Fast! and, in Python, doesn't need special Large Number handling
+#
+def tupper_decode():
+    # binary representation of k / 17
+    # strip the "0b" prefix and zero-pad to the required length
+    binary_str = bin(k / 17 )
+    bits = binary_str[2::].zfill(width * height)
 
+    for x in range(width):
+        col_offset = (x * height)
+
+        for y in range(height):
+            # natural index: inverted y axis
+            # index = (x * height + y)
+
+            # invert y
+            # surely better to decode naturally and use different k!
+            row_offset = (height - y - 1)
+            index = col_offset + row_offset
+            draw(x, y, int(bits[index]))
+
+tupper_decode()
 flush()
 
+tupper_formula()
+flush()
