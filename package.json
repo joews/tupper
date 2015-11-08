@@ -1,0 +1,27 @@
+{
+  "name": "tupper",
+  "version": "1.0.0",
+  "description": "Tupper's self-referential formula",
+  "scripts": {
+    "start": "budo index.js:bundle.js --live -- -t babelify | garnish",
+    "build": "browserify index.js -t babelify | uglifyjs -cm > bundle.js"
+  },
+  "private": true,
+  "dependencies": {
+    "babelify": "^6.4.0",
+    "bignumber.js": "^2.1.0",
+    "browserify": "^11.2.0",
+    "budo": "^5.1.5",
+    "garnish": "^3.2.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jwhitfieldseed/tupper.git"
+  },
+  "author": "Joe Whitfield-Seed",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jwhitfieldseed/tupper/issues"
+  },
+  "homepage": "https://github.com/jwhitfieldseed/tupper#readme"
+}
