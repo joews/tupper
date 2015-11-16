@@ -1,8 +1,8 @@
 # tupper
-Just for fun, [Tupper's "self-referential" formula](http://mathworld.wolfram.com/TuppersSelf-ReferentialFormula.html) in Python.
+Just for fun + learning, an efficient implementation of [Tupper's "self-referential" formula](http://mathworld.wolfram.com/TuppersSelf-ReferentialFormula.html) in JavaScript (and some sketches in Python).
 
 ````
-❯ python tupper.py
+❯ babel-node tupper.py
                 ##                                      ##                                ##  ####  ##          ##                                ##    ##  ##          ##        ##  ####  ##            ##      ##
                 ##                                      ##  ##            ##              ##    ##  ##          ##                                ##    ##  ##          ##        ##    ##  ##            ##      ##
 ####            ##                                    ##    ##            ##        ####  ##    ##  ##  ##  ##  ##  ####  ########    ######  ######  ##    ##  ##  ##  ##        ##    ##    ##            ##    ##
